@@ -4,7 +4,7 @@
 ### INSTALLATION AND SETUP
 This is only for server. Client doesn't need it. Use -servermod=@PostApoWeather command line parameter for your server.
 
-At server side open your mission Init.c and find void main(). Put following code instead original weather init.
+At server side open your mission Init.c and find void main(). Put following code instead of original weather init.
 
 ```
 Weather weather = g_Game.GetWeather();
