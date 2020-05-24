@@ -1,0 +1,10 @@
+name = "Post-Apo Weather";
+picture = "abPostApoWeather/Icons/icon.paa";
+logoSmall = "abPostApoWeather/Icons/icon_ss.paa";
+logo = "abPostApoWeather/Icons/icon_s.paa";
+logoOver = "abPostApoWeather/Icons/icon_s.paa";
+tooltip = "Post-Apo Weather";
+overview = "Adds Post-Apo harsh weather.";
+action = "https://steamcommunity.com/sharedfiles/filedetails/?id=2106737468";
+author = "ataribaby";
+version = "1.04";
