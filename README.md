@@ -4,7 +4,7 @@
 ### INSTALLATION AND SETUP
 This is only for server. Client doesn't need it. Use -servermod=@PostApoWeather command line parameter for your server.
 
-At server side open your mission Init.c and find void main(). Put following code instead original weather init.
+At server side open your mission Init.c and find void main(). Put following code instead of original weather init.
 
 ```
 Weather weather = g_Game.GetWeather();
@@ -36,7 +36,7 @@ Starts weather manager and generates first weather update if necessary.
 
 **_Get_ab_PostApoWeather().Stop()_**
   
-Stops or pause weather manager. For example if you want plug your own weather effect for a while. Resume weather manager with Start();
+Stops or pauses weather manager. For example if you want plug your own weather effect for a while. Resume weather manager with Start();
 
 **_Confuguration properties_**
 
