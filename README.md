@@ -36,7 +36,7 @@ Starts weather manager and generates first weather update if necessary.
 
 **_Get_ab_PostApoWeather().Stop()_**
   
-Stops or pause weather manager. For example if you want plug your own weather effect for a while. Resume weather manager with Start();
+Stops or pauses weather manager. For example if you want plug your own weather effect for a while. Resume weather manager with Start();
 
 **_Confuguration properties_**
 
