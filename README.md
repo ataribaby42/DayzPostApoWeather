@@ -36,12 +36,12 @@ Starts weather manager and generates first weather update if necessary.
 
 **_Get_ab_PostApoWeather().Stop()_**
   
-Stops or pause weather manager. For example if you want plug your own weather effect for a while. Resumed weather manager with Start();
+Stops or pause weather manager. For example if you want plug your own weather effect for a while. Resume weather manager with Start();
 
 **_Confuguration properties_**
 
 Properties can be changed anytime during runtime. Meaing is self-explanatory.
-First, good weather chance decided. Second, if bad weather is selected, rain or storm weather chance is decided. On top of that checks for anomaly storm is running.
+First, good weather chance is decided. Second, if bad weather is selected, rain or storm weather chance is decided. On top of that checks for anomaly storm is running.
 
 **_Get_ab_PostApoWeather().GOOD_WEATHER_CHANCE_** - int percentage 0 - 100%
 **_Get_ab_PostApoWeather().STORM_WEATHER_CHANCE_** - int percentage 0 - 100%
