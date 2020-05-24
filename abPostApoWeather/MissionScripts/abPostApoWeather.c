@@ -364,7 +364,6 @@ class ab_PostApoWeather
 				fog = Math.RandomFloatInclusive(0.15, 0.3);
 				wind = Math.RandomFloatInclusive(10.0, 20.0);
 				
-				weather.SetStorm(1.0, 0.85, 45);
 				SetOvercast(9.0, speedOfChange, nextChangeTime);
 				SetFog(fog, speedOfChange, nextChangeTime);
 				SetWind(wind, speedOfChange);
@@ -383,7 +382,7 @@ class ab_PostApoWeather
 					speedOfChange = Math.Min(6 * 60, speedOfChange);
 				}
 				
-				weather.SetStorm(1.0, 0.85, Math.RandomFloatInclusive(20, 45));
+				weather.SetStorm(1.0, 0.5, Math.RandomFloatInclusive(20, 45));
 				SetOvercast(9.0, speedOfChange, nextChangeTime);
 				SetRain(Math.RandomFloatInclusive(0.6, 1.0), speedOfChange, nextChangeTime);
 				SetFog(fog, speedOfChange, nextChangeTime);
@@ -404,7 +403,7 @@ class ab_PostApoWeather
 				
 				wind = Math.RandomFloatInclusive(30.0, 40.0);
 				
-				weather.GetOvercast().Set(1.0, speedOfChange, nextChangeTime);
+				SetOvercast(1.0, speedOfChange, nextChangeTime);
 				SetRain(0, speedOfChange, nextChangeTime);
 				SetFog(0, speedOfChange, nextChangeTime);
 				SetWind(wind, speedOfChange);
@@ -422,7 +421,7 @@ class ab_PostApoWeather
 					speedOfChange = 20;
 				}
 				
-				weather.SetStorm(1.0, 0.85, 2.5);
+				weather.SetStorm(1.0, 0.0, 2.5);
 				SetOvercast(1.0, speedOfChange, nextChangeTime);
 				SetRain(0, speedOfChange, nextChangeTime);
 				SetFog(0, speedOfChange, nextChangeTime);
