@@ -154,11 +154,7 @@ class ab_PostApoWeather
 		
 		float chance = Math.RandomIntInclusive(0, 100);
 		
-		if(currentWeather == ab_PostApoWeatherTypes.START)
-		{
-			currentWeather = ab_PostApoWeatherTypes.PRE_GOOD;
-		}
-		else if(currentWeather == ab_PostApoWeatherTypes.PRE_CLEAR)
+		if(currentWeather == ab_PostApoWeatherTypes.PRE_CLEAR)
 		{
 			currentWeather = ab_PostApoWeatherTypes.CLEAR;
 		}
