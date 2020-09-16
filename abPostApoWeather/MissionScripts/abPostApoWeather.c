@@ -39,7 +39,50 @@ class ab_PostApoWeather
 	int STORM_WEATHER_DURATION_MAX = 15 * 60;
 	int ANOMALY_STORM_WEATHER_DURATION_MIN = 8 * 60;
 	int ANOMALY_STORM_WEATHER_DURATION_MAX = 15 * 60;
-
+	
+	float CLEAR_WEATHER_PARAMS_OVERCAST_MIN = 0.0;
+	float CLEAR_WEATHER_PARAMS_OVERCAST_MAX = 0.2;
+	float CLEAR_WEATHER_PARAMS_FOG_MIN = 0.0;
+	float CLEAR_WEATHER_PARAMS_FOG_MAX = 0.0;
+	float CLEAR_WEATHER_PARAMS_WIND_MIN = 0.1;
+	float CLEAR_WEATHER_PARAMS_WIND_MAX = 2.0;
+	
+	float GOOD_WEATHER_PARAMS_OVERCAST_MIN = 0.6;
+	float GOOD_WEATHER_PARAMS_OVERCAST_MAX = 0.7;
+	float GOOD_WEATHER_PARAMS_FOG_MIN = 0.0;
+	float GOOD_WEATHER_PARAMS_FOG_MAX = 0.1;
+	float GOOD_WEATHER_PARAMS_WIND_MIN = 0.1;
+	float GOOD_WEATHER_PARAMS_WIND_MAX = 5.0;
+	
+	float BAD_WEATHER_PARAMS_OVERCAST_MIN = 0.8;
+	float BAD_WEATHER_PARAMS_OVERCAST_MAX = 0.9;
+	float BAD_WEATHER_PARAMS_FOG_MIN = 0.05;
+	float BAD_WEATHER_PARAMS_FOG_MAX = 0.15;
+	float BAD_WEATHER_PARAMS_WIND_MIN = 5.0;
+	float BAD_WEATHER_PARAMS_WIND_MAX = 10.0;
+	float BAD_WEATHER_PARAMS_RAIN_MIN = 0.01;
+	float BAD_WEATHER_PARAMS_RAIN_MAX = 0.5;
+	
+	float STORM_WEATHER_PARAMS_OVERCAST_MIN = 0.9;
+	float STORM_WEATHER_PARAMS_OVERCAST_MAX = 0.9;
+	float STORM_WEATHER_PARAMS_FOG_MIN = 0.15;
+	float STORM_WEATHER_PARAMS_FOG_MAX = 0.3;
+	float STORM_WEATHER_PARAMS_WIND_MIN = 10.0;
+	float STORM_WEATHER_PARAMS_WIND_MAX = 20.0;
+	float STORM_WEATHER_PARAMS_RAIN_MIN = 0.6;
+	float STORM_WEATHER_PARAMS_RAIN_MAX = 1.0;
+	
+	float ANOMALY_STORM_WEATHER_PARAMS_OVERCAST_MIN = 1.0;
+	float ANOMALY_STORM_WEATHER_PARAMS_OVERCAST_MAX = 1.0;
+	float ANOMALY_STORM_WEATHER_PARAMS_FOG_MIN = 0.0;
+	float ANOMALY_STORM_WEATHER_PARAMS_FOG_MAX = 0.0;
+	float ANOMALY_STORM_WEATHER_PARAMS_WIND_MIN = 30.0;
+	float ANOMALY_STORM_WEATHER_PARAMS_WIND_MAX = 40.0;
+	
+	float WEATHER_PARAMS_RAIN_THRESHOLD_OVERCAST_MIN = 0.55;
+	float WEATHER_PARAMS_RAIN_THRESHOLD_OVERCAST_MAX = 1.0;
+	float WEATHER_PARAMS_RAIN_THRESHOLD_STOP_TIME = 60.0;
+	
 	private bool started = false;
 	private bool initialChange = true;
 	private int nextChangeTime = 99999;
@@ -48,6 +91,7 @@ class ab_PostApoWeather
 	private float overcast;
 	private float fog;
 	private float wind;
+	private float rain;
 	
 	void ab_PostApoWeather()
 	{	
@@ -228,7 +272,7 @@ class ab_PostApoWeather
 		}
 		
 		float speedOfChange;
-		weather.SetRainThresholds(0.55, 1.0, 60);
+		weather.SetRainThresholds(WEATHER_PARAMS_RAIN_THRESHOLD_OVERCAST_MIN, WEATHER_PARAMS_RAIN_THRESHOLD_OVERCAST_MAX, WEATHER_PARAMS_RAIN_THRESHOLD_STOP_TIME);
 		
 		switch(currentWeather)
 		{
@@ -250,11 +294,15 @@ class ab_PostApoWeather
 					speedOfChange = Math.Min(12 * 60, speedOfChange);
 				}
 				
+				overcast = Math.RandomFloatInclusive(CLEAR_WEATHER_PARAMS_OVERCAST_MIN, CLEAR_WEATHER_PARAMS_OVERCAST_MAX);
+				fog = Math.RandomFloatInclusive(CLEAR_WEATHER_PARAMS_FOG_MIN, CLEAR_WEATHER_PARAMS_FOG_MAX);
+				wind = Math.RandomFloatInclusive(CLEAR_WEATHER_PARAMS_WIND_MIN, CLEAR_WEATHER_PARAMS_WIND_MAX);
+				
 				weather.SetStorm(0.0, 1.0, 45);
-				SetOvercast(Math.RandomFloatInclusive(0.0, 0.2), speedOfChange, nextChangeTime);
+				SetOvercast(overcast, speedOfChange, nextChangeTime);
 				SetRain(0, speedOfChange, nextChangeTime);
-				SetFog(0, speedOfChange, nextChangeTime);
-				SetWind(Math.RandomFloatInclusive(0.1, 2.0), speedOfChange);
+				SetFog(fog, speedOfChange, nextChangeTime);
+				SetWind(wind, speedOfChange);
 				break;
 			case ab_PostApoWeatherTypes.PRE_GOOD:
 				Print("PostApoWeather: PRE_GOOD selected");
@@ -270,9 +318,9 @@ class ab_PostApoWeather
 					speedOfChange = nextChangeTime * 0.8;
 				}
 				
-				overcast = Math.RandomFloatInclusive(0.6, 0.7);
-				fog = Math.RandomFloatInclusive(0.0, 0.1);
-				wind = Math.RandomFloatInclusive(0.1, 5.0);
+				overcast = Math.RandomFloatInclusive(GOOD_WEATHER_PARAMS_OVERCAST_MIN, GOOD_WEATHER_PARAMS_OVERCAST_MAX);
+				fog = Math.RandomFloatInclusive(GOOD_WEATHER_PARAMS_FOG_MIN, GOOD_WEATHER_PARAMS_FOG_MAX);
+				wind = Math.RandomFloatInclusive(GOOD_WEATHER_PARAMS_WIND_MIN, GOOD_WEATHER_PARAMS_WIND_MAX);
 				
 				weather.SetStorm(0.0, 1.0, 45);
 				SetOvercast(overcast, speedOfChange, nextChangeTime);
@@ -314,9 +362,10 @@ class ab_PostApoWeather
 					speedOfChange = nextChangeTime * 0.8;
 				}
 				
-				overcast = Math.RandomFloatInclusive(0.8, 0.9);
-				fog = Math.RandomFloatInclusive(0.05, 0.15);
-				wind = Math.RandomFloatInclusive(5.0, 10.0);
+				overcast = Math.RandomFloatInclusive(BAD_WEATHER_PARAMS_OVERCAST_MIN, BAD_WEATHER_PARAMS_OVERCAST_MAX);
+				fog = Math.RandomFloatInclusive(BAD_WEATHER_PARAMS_FOG_MIN, BAD_WEATHER_PARAMS_FOG_MAX);
+				wind = Math.RandomFloatInclusive(BAD_WEATHER_PARAMS_WIND_MIN, BAD_WEATHER_PARAMS_WIND_MAX);
+				rain = Math.RandomFloatInclusive(BAD_WEATHER_PARAMS_RAIN_MIN, BAD_WEATHER_PARAMS_RAIN_MAX);
 				
 				weather.SetStorm(0.0, 1.0, 45);
 				SetOvercast(overcast, speedOfChange, nextChangeTime);
@@ -339,7 +388,7 @@ class ab_PostApoWeather
 				
 				weather.SetStorm(0.0, 1.0, 45);
 				SetOvercast(overcast, speedOfChange, nextChangeTime);
-				SetRain(Math.RandomFloatInclusive(0.01, 0.5), speedOfChange, nextChangeTime);
+				SetRain(rain, speedOfChange, nextChangeTime);
 				SetFog(fog, speedOfChange, nextChangeTime);
 				SetWind(wind, speedOfChange);
 				break;
@@ -357,10 +406,12 @@ class ab_PostApoWeather
 					speedOfChange = nextChangeTime * 0.8;
 				}
 				
-				fog = Math.RandomFloatInclusive(0.15, 0.3);
-				wind = Math.RandomFloatInclusive(10.0, 20.0);
+				overcast = Math.RandomFloatInclusive(STORM_WEATHER_PARAMS_OVERCAST_MIN, STORM_WEATHER_PARAMS_OVERCAST_MAX);
+				fog = Math.RandomFloatInclusive(STORM_WEATHER_PARAMS_FOG_MIN, STORM_WEATHER_PARAMS_FOG_MAX);
+				wind = Math.RandomFloatInclusive(STORM_WEATHER_PARAMS_WIND_MIN, STORM_WEATHER_PARAMS_WIND_MAX);
+				rain = Math.RandomFloatInclusive(STORM_WEATHER_PARAMS_RAIN_MIN, STORM_WEATHER_PARAMS_RAIN_MAX);
 				
-				SetOvercast(9.0, speedOfChange, nextChangeTime);
+				SetOvercast(overcast, speedOfChange, nextChangeTime);
 				SetFog(fog, speedOfChange, nextChangeTime);
 				SetWind(wind, speedOfChange);
 				break;
@@ -379,8 +430,8 @@ class ab_PostApoWeather
 				}
 				
 				weather.SetStorm(1.0, 0.5, Math.RandomFloatInclusive(20, 45));
-				SetOvercast(9.0, speedOfChange, nextChangeTime);
-				SetRain(Math.RandomFloatInclusive(0.6, 1.0), speedOfChange, nextChangeTime);
+				SetOvercast(overcast, speedOfChange, nextChangeTime);
+				SetRain(rain, speedOfChange, nextChangeTime);
 				SetFog(fog, speedOfChange, nextChangeTime);
 				SetWind(wind, speedOfChange);
 				break;
@@ -397,11 +448,13 @@ class ab_PostApoWeather
 					speedOfChange = nextChangeTime * 0.8;
 				}
 				
-				wind = Math.RandomFloatInclusive(30.0, 40.0);
+				overcast = Math.RandomFloatInclusive(ANOMALY_STORM_WEATHER_PARAMS_OVERCAST_MIN, ANOMALY_STORM_WEATHER_PARAMS_OVERCAST_MAX);
+				fog = Math.RandomFloatInclusive(ANOMALY_STORM_WEATHER_PARAMS_FOG_MIN, ANOMALY_STORM_WEATHER_PARAMS_FOG_MAX);
+				wind = Math.RandomFloatInclusive(ANOMALY_STORM_WEATHER_PARAMS_WIND_MIN, ANOMALY_STORM_WEATHER_PARAMS_WIND_MAX);
 				
-				SetOvercast(1.0, speedOfChange, nextChangeTime);
+				SetOvercast(overcast, speedOfChange, nextChangeTime);
 				SetRain(0, speedOfChange, nextChangeTime);
-				SetFog(0, speedOfChange, nextChangeTime);
+				SetFog(fog, speedOfChange, nextChangeTime);
 				SetWind(wind, speedOfChange);
 				break;
 			case ab_PostApoWeatherTypes.ANOMALY_STORM:
@@ -418,9 +471,9 @@ class ab_PostApoWeather
 				}
 				
 				weather.SetStorm(1.0, 0.0, 2.5);
-				SetOvercast(1.0, speedOfChange, nextChangeTime);
+				SetOvercast(overcast, speedOfChange, nextChangeTime);
 				SetRain(0, speedOfChange, nextChangeTime);
-				SetFog(0, speedOfChange, nextChangeTime);
+				SetFog(fog, speedOfChange, nextChangeTime);
 				SetWind(wind, speedOfChange);
 				break;
 			default:

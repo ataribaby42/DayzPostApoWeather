@@ -7,4 +7,4 @@ tooltip = "Post-Apo Weather";
 overview = "Adds Post-Apo harsh weather.";
 action = "https://steamcommunity.com/sharedfiles/filedetails/?id=2106737468";
 author = "ataribaby";
-version = "1.10";
+version = "1.20";
