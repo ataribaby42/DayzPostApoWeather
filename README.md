@@ -4,6 +4,8 @@
 ### INSTALLATION AND SETUP
 This is only for server. Client doesn't need it. Use -servermod=@PostApoWeather command line parameter for your server.
 
+As discovered by morph75rus, seems full server wipe (delete mission storage_1 folder) is needed in case there is no rain at all during bad or storm weather.
+
 At server side open your mission Init.c and find void main(). Put following code instead of original weather init.
 
 ```
